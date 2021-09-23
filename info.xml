@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<extension key="io.sms77.sms" type="module">
+    <file>sms77</file>
+    <name>sms77 SMS provider</name>
+    <description>sms77 SMS provider</description>
+    <license>AGPL-3.0</license>
+    <maintainer>
+        <author>sms77 e.K.</author>
+        <email>support@sms77.io</email>
+    </maintainer>
+    <urls>
+        <url desc="Main Extension Page">https://github.com/sms77io/CiviCRM</url>
+        <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+    </urls>
+    <releaseDate>2017-09-23</releaseDate>
+    <version>1.0</version>
+    <develStage>stable</develStage>
+    <compatibility>
+        <ver>4.7</ver>
+        <ver>4.8</ver>
+        <ver>4.9</ver>
+        <ver>5.0</ver>
+        <ver>5.1</ver>
+        <ver>5.2</ver>
+        <ver>5.3</ver>
+    </compatibility>
+    <comments>Implements a sms77 SMS provider for CiviCRM</comments>
+    <civix>
+        <namespace>CRM/Sms77</namespace>
+    </civix>
+</extension>
