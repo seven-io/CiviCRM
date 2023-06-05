@@ -1,25 +1,25 @@
-# io.sms77.sms
+# io.seven.sms
 
-This CiviCRM extension provides a [sms77](https://www.sms77.io) SMS provider for
+This CiviCRM extension provides a [seven](https://www.seven.io) SMS provider for
 sending/receiving SMS.
 
 ## Installation
 
 - `cd /path/to/civicrm/ext`
-- `git clone https://github.com/sms77io/CiviCRM io.sms77.sms`
+- `git clone https://github.com/seven-io/CiviCRM io.seven.sms`
 - Go to `Administer->System Settings->Extensions`
-- Locate `sms77 SMS provider`and press the `Install` button
+- Locate `seven SMS provider`and press the `Install` button
 
 ## Setup
 
 - Navigate to `Administer->System Settings->SMS Providers`
 - Click the button `Add SMS Provider`
-- `Name`: Choose `sms77` and wait for the default values to load
+- `Name`: Choose `seven` and wait for the default values to load
 - `Title`: Use whatever label makes sense to you
-- `Username`: Use one of your sms77 API keys
+- `Username`: Use one of your seven API keys
 - `Password`: Use the corresponding API secret for the API key
 - `API Type`: Set this to `http`
-- `API Url`: Make sure it's set to `https://gateway.sms77.io`
+- `API Url`: Make sure it's set to `https://gateway.seven.io`
 - `API Parameters`: Set a custom sender ID like `from=CiviCRM` or omit the value
   e.g. `from=`
 
@@ -35,6 +35,6 @@ Sent SMS messages will be added to the activity log.
 
 ### Support
 
-Need help? Feel free to [contact us](https://www.sms77.io/en/company/contact/).
+Need help? Feel free to [contact us](https://www.seven.io/en/company/contact/).
 
-[![MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
+[![MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE.txt)

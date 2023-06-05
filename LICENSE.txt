@@ -1,5 +1,6 @@
-Package: io.sms77.sms
-Copyright (C) 2017, FIXME <FIXME>
+Package: io.seven.sms
+Copyright (C) 2021-2022 sms77 e.K.
+Copyright (C) 2023-present seven communications GmbH & Co. KG
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------

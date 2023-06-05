@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class CRM_SMS_Provider_io_sms77_sms
+ * Class CRM_SMS_Provider_io_seven_sms
  */
-class io_sms77_sms extends CRM_SMS_Provider {
+class io_seven_sms extends CRM_SMS_Provider {
     const MAX_SMS_CHAR = 1520;
     /**
      * We only need one instance of this object. So we use the singleton
@@ -12,7 +12,7 @@ class io_sms77_sms extends CRM_SMS_Provider {
      * @static
      */
     static private $_singleton = [];
-    public $_apiURL = "https://gateway.sms77.io";
+    public $_apiURL = "https://gateway.seven.io";
     /**
      * provider details
      * @var    string
@@ -43,7 +43,7 @@ class io_sms77_sms extends CRM_SMS_Provider {
         if (!isset(self::$_singleton[$cacheKey]) || $force) {
             $provider = [];
             if ($pID) $provider = CRM_SMS_BAO_Provider::getProviderInfo($pID);
-            self::$_singleton[$cacheKey] = new io_sms77_sms($provider, !$pID);
+            self::$_singleton[$cacheKey] = new io_seven_sms($provider, !$pID);
         }
 
         return self::$_singleton[$cacheKey];
@@ -82,7 +82,7 @@ class io_sms77_sms extends CRM_SMS_Provider {
     private function post(array $data): array {
         $data['from'] = $this->_providerInfo['api_params']['from'];
         $data['json'] = 1;
-        $ch = curl_init('https://gateway.sms77.io/api/sms');
+        $ch = curl_init('https://gateway.seven.io/api/sms');
         $verifySSL = Civi::settings()->get('verifySSL');
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $verifySSL ? 2 : 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);

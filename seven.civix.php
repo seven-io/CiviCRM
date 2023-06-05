@@ -6,7 +6,7 @@
  * (Delegated) Implements hook_civicrm_config().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
-function _sms77_civix_civicrm_config(&$config = null) {
+function _seven_civix_civicrm_config(&$config = null) {
     static $configured = false;
     if ($configured) return;
     $configured = true;
@@ -28,26 +28,26 @@ function _sms77_civix_civicrm_config(&$config = null) {
  * @param array $files
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
  */
-function _sms77_civix_civicrm_xmlMenu(array &$files) {
-    foreach (_sms77_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) $files[] = $file;
+function _seven_civix_civicrm_xmlMenu(array &$files) {
+    foreach (_seven_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) $files[] = $file;
 }
 
 /**
  * Implements hook_civicrm_install().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
-function _sms77_civix_civicrm_install() {
-    _sms77_civix_civicrm_config();
-    if ($upgrader = _sms77_civix_upgrader()) $upgrader->onInstall();
+function _seven_civix_civicrm_install() {
+    _seven_civix_civicrm_config();
+    if ($upgrader = _seven_civix_upgrader()) $upgrader->onInstall();
 }
 
 /**
  * Implements hook_civicrm_postInstall().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
  */
-function _sms77_civix_civicrm_postInstall() {
-    _sms77_civix_civicrm_config();
-    if (($upgrader = _sms77_civix_upgrader())
+function _seven_civix_civicrm_postInstall() {
+    _seven_civix_civicrm_config();
+    if (($upgrader = _seven_civix_upgrader())
         && is_callable([$upgrader, 'onPostInstall'])) $upgrader->onPostInstall();
 }
 
@@ -55,18 +55,18 @@ function _sms77_civix_civicrm_postInstall() {
  * Implements hook_civicrm_uninstall().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
-function _sms77_civix_civicrm_uninstall() {
-    _sms77_civix_civicrm_config();
-    if ($upgrader = _sms77_civix_upgrader()) $upgrader->onUninstall();
+function _seven_civix_civicrm_uninstall() {
+    _seven_civix_civicrm_config();
+    if ($upgrader = _seven_civix_upgrader()) $upgrader->onUninstall();
 }
 
 /**
  * (Delegated) Implements hook_civicrm_enable().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
-function _sms77_civix_civicrm_enable() {
-    _sms77_civix_civicrm_config();
-    if (($upgrader = _sms77_civix_upgrader()) && is_callable([$upgrader, 'onEnable']))
+function _seven_civix_civicrm_enable() {
+    _seven_civix_civicrm_config();
+    if (($upgrader = _seven_civix_upgrader()) && is_callable([$upgrader, 'onEnable']))
         $upgrader->onEnable();
 }
 
@@ -75,9 +75,9 @@ function _sms77_civix_civicrm_enable() {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
  * @return mixed
  */
-function _sms77_civix_civicrm_disable() {
-    _sms77_civix_civicrm_config();
-    if (($upgrader = _sms77_civix_upgrader()) && is_callable([$upgrader, 'onDisable']))
+function _seven_civix_civicrm_disable() {
+    _seven_civix_civicrm_config();
+    if (($upgrader = _seven_civix_upgrader()) && is_callable([$upgrader, 'onDisable']))
         $upgrader->onDisable();
 }
 
@@ -90,16 +90,16 @@ function _sms77_civix_civicrm_disable() {
  *     pending) for 'enqueue', returns void
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
  */
-function _sms77_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = null) {
-    if ($upgrader = _sms77_civix_upgrader()) return $upgrader->onUpgrade($op, $queue);
+function _seven_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = null) {
+    if ($upgrader = _seven_civix_upgrader()) return $upgrader->onUpgrade($op, $queue);
 }
 
 /**
- * @return CRM_Sms77_Upgrader
+ * @return CRM_Seven_Upgrader
  */
-function _sms77_civix_upgrader() {
-    if (!file_exists(__DIR__ . '/CRM/Sms77/Upgrader.php')) return null;
-    return CRM_Sms77_Upgrader_Base::instance();
+function _seven_civix_upgrader() {
+    if (!file_exists(__DIR__ . '/CRM/Seven/Upgrader.php')) return null;
+    return CRM_Seven_Upgrader_Base::instance();
 }
 
 /**
@@ -110,7 +110,7 @@ function _sms77_civix_upgrader() {
  * @param $pattern string, glob pattern, eg "*.txt"
  * @return array(string)
  */
-function _sms77_civix_find_files($dir, $pattern) {
+function _seven_civix_find_files($dir, $pattern) {
     if (is_callable(['CRM_Utils_File', 'findFiles']))
         return CRM_Utils_File::findFiles($dir, $pattern);
 
@@ -118,7 +118,7 @@ function _sms77_civix_find_files($dir, $pattern) {
     $result = [];
     while (!empty($todos)) {
         $subdir = array_shift($todos);
-        foreach (_sms77_civix_glob("$subdir/$pattern") as $match)
+        foreach (_seven_civix_glob("$subdir/$pattern") as $match)
             if (!is_dir($match)) $result[] = $match;
         if ($dh = opendir($subdir)) {
             while (false !== ($entry = readdir($dh))) {
@@ -137,12 +137,12 @@ function _sms77_civix_find_files($dir, $pattern) {
  * Find any *.mgd.php files, merge their content, and return.
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
  */
-function _sms77_civix_civicrm_managed(&$entities) {
-    $mgdFiles = _sms77_civix_find_files(__DIR__, '*.mgd.php');
+function _seven_civix_civicrm_managed(&$entities) {
+    $mgdFiles = _seven_civix_find_files(__DIR__, '*.mgd.php');
     foreach ($mgdFiles as $file) {
         $es = include $file;
         foreach ($es as $e) {
-            if (empty($e['module'])) $e['module'] = 'io.sms77.sms';
+            if (empty($e['module'])) $e['module'] = 'io.seven.sms';
             $entities[] = $e;
             if (empty($e['params']['version'])) $e['params']['version'] = '3';
         }
@@ -155,10 +155,10 @@ function _sms77_civix_civicrm_managed(&$entities) {
  * Note: This hook only runs in CiviCRM 4.4+.
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
-function _sms77_civix_civicrm_caseTypes(&$caseTypes) {
+function _seven_civix_civicrm_caseTypes(&$caseTypes) {
     if (!is_dir(__DIR__ . '/xml/case')) return;
 
-    foreach (_sms77_civix_glob(__DIR__ . '/xml/case/*.xml') as $file) {
+    foreach (_seven_civix_glob(__DIR__ . '/xml/case/*.xml') as $file) {
         $name = preg_replace('/\.xml$/', '', basename($file));
         if ($name != CRM_Case_XMLProcessor::mungeCaseType($name)) {
             $errorMessage = sprintf("Case-type file name is malformed (%s vs %s)", $name, CRM_Case_XMLProcessor::mungeCaseType($name));
@@ -167,7 +167,7 @@ function _sms77_civix_civicrm_caseTypes(&$caseTypes) {
         }
         $caseTypes[$name] = [
             'file' => $file,
-            'module' => 'io.sms77.sms',
+            'module' => 'io.seven.sms',
             'name' => $name,
         ];
     }
@@ -179,14 +179,14 @@ function _sms77_civix_civicrm_caseTypes(&$caseTypes) {
  * Note: This hook only runs in CiviCRM 4.5+.
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
  */
-function _sms77_civix_civicrm_angularModules(&$angularModules) {
+function _seven_civix_civicrm_angularModules(&$angularModules) {
     if (!is_dir(__DIR__ . '/ang')) return;
 
-    $files = _sms77_civix_glob(__DIR__ . '/ang/*.ang.php');
+    $files = _seven_civix_glob(__DIR__ . '/ang/*.ang.php');
     foreach ($files as $file) {
         $name = preg_replace(':\.ang\.php$:', '', basename($file));
         $module = include $file;
-        if (empty($module['ext'])) $module['ext'] = 'io.sms77.sms';
+        if (empty($module['ext'])) $module['ext'] = 'io.seven.sms';
         $angularModules[$name] = $module;
     }
 }
@@ -201,7 +201,7 @@ function _sms77_civix_civicrm_angularModules(&$angularModules) {
  * @param string $pattern
  * @return array, possibly empty
  */
-function _sms77_civix_glob($pattern) {
+function _seven_civix_glob($pattern) {
     $result = glob($pattern);
     return is_array($result) ? $result : [];
 }
@@ -214,7 +214,7 @@ function _sms77_civix_glob($pattern) {
  * @param array $item - menu you need to insert (parent/child attributes will be filled
  *     for you)
  */
-function _sms77_civix_insert_navigation_menu(&$menu, $path, $item): bool {
+function _seven_civix_insert_navigation_menu(&$menu, $path, $item): bool {
     // If we are done going down the path, insert menu
     if (empty($path)) {
         $menu[] = [
@@ -233,7 +233,7 @@ function _sms77_civix_insert_navigation_menu(&$menu, $path, $item): bool {
     foreach ($menu as $key => &$entry) {
         if ($entry['attributes']['name'] == $first) {
             if (!isset($entry['child'])) $entry['child'] = [];
-            $found = _sms77_civix_insert_navigation_menu(
+            $found = _seven_civix_insert_navigation_menu(
                 $entry['child'], implode('/', $path), $item, $key);
         }
     }
@@ -243,24 +243,24 @@ function _sms77_civix_insert_navigation_menu(&$menu, $path, $item): bool {
 /**
  * (Delegated) Implements hook_civicrm_navigationMenu().
  */
-function _sms77_civix_navigationMenu(&$nodes) {
+function _seven_civix_navigationMenu(&$nodes) {
     if (!is_callable(['CRM_Core_BAO_Navigation', 'fixNavigationMenu']))
-        _sms77_civix_fixNavigationMenu($nodes);
+        _seven_civix_fixNavigationMenu($nodes);
 }
 
 /**
  * Given a navigation menu, generate navIDs for any items which are
  * missing them.
  */
-function _sms77_civix_fixNavigationMenu(&$nodes) {
+function _seven_civix_fixNavigationMenu(&$nodes) {
     $maxNavID = 1;
     array_walk_recursive($nodes, static function ($item, $key) use (&$maxNavID) {
         if ($key === 'navID') $maxNavID = max($maxNavID, $item);
     });
-    _sms77_civix_fixNavigationMenuItems($nodes, $maxNavID, null);
+    _seven_civix_fixNavigationMenuItems($nodes, $maxNavID, null);
 }
 
-function _sms77_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) {
+function _seven_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) {
     $origKeys = array_keys($nodes);
     foreach ($origKeys as $origKey) {
         if (!isset($nodes[$origKey]['attributes']['parentID']) && $parentID !== null)
@@ -274,7 +274,7 @@ function _sms77_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) {
             $origKey = $newKey;
         }
         if (isset($nodes[$origKey]['child']) && is_array($nodes[$origKey]['child'])) {
-            _sms77_civix_fixNavigationMenuItems($nodes[$origKey]['child'], $maxNavID,
+            _seven_civix_fixNavigationMenuItems($nodes[$origKey]['child'], $maxNavID,
                 $nodes[$origKey]['attributes']['navID']);
         }
     }
@@ -284,7 +284,7 @@ function _sms77_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) {
  * (Delegated) Implements hook_civicrm_alterSettingsFolders().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
  */
-function _sms77_civix_civicrm_alterSettingsFolders(&$metaDataFolders = null) {
+function _seven_civix_civicrm_alterSettingsFolders(&$metaDataFolders = null) {
     static $configured = false;
     if ($configured) return;
     $configured = true;

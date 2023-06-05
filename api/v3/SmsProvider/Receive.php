@@ -28,11 +28,11 @@ function _civicrm_api3_sms_provider_Receive_spec(&$spec) {
  * @see civicrm_api3_create_success
  */
 function civicrm_api3_sms_provider_Receive($params) {
-    require_once './../../../io_sms77_sms.php';
+    require_once './../../../io_seven_sms.php';
 
     if (!isset($params['id'])) $params['id'] = null;
 
-    $res = io_sms77_sms::singleton()
+    $res = io_seven_sms::singleton()
         ->inbound($params['from_number'], $params['content'], $params['id']);
 
     if ($res && $res->id) {
