@@ -103,9 +103,6 @@ class io_seven_sms extends CRM_SMS_Provider {
     function inbound(string $from, string $body, ?int $trackID = null) {
         $to = null;
         if ($trackID === null) $trackID = date('YmdHis');
-/*        $fromPhone = $this->retrieve('From', 'String');
-        $body = $this->retrieve('Body', 'String');
-        $trackID = $this->retrieve('SmsSid', 'String');*/
         return $this->processInbound($from, $body, $to, $trackID);
     }
 }
