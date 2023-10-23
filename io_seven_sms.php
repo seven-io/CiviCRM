@@ -8,22 +8,18 @@ class io_seven_sms extends CRM_SMS_Provider {
     /**
      * We only need one instance of this object. So we use the singleton
      * pattern and cache the instance in this variable
-     * @var object
+     * @var object $_singleton
      * @static
      */
     static private $_singleton = [];
-    public $_apiURL = "https://gateway.seven.io";
+    public $_apiURL = 'https://gateway.seven.io/api';
     /**
-     * provider details
-     * @var    string
+     * @var string $_providerInfo
      */
     protected $_providerInfo = [];
     protected $_id = 0;
 
-    /**
-     * Constructor
-     * @return void
-     */
+    /** @return void */
     function __construct($provider, $skipAuth = true) {
         $this->_providerInfo = $provider;
     }
@@ -65,11 +61,13 @@ class io_seven_sms extends CRM_SMS_Provider {
             $to = $recipients;
             $res = $this->post(compact('message', 'recipients', 'to'));
 
-            if (in_array((int)$res['success'], [100, 101])) {
+            $needle = (int)$res['success'];
+            $haystack = [100, 101];
+            if (in_array($needle, $haystack)) {
                 $id = null;
                 foreach ($res['messages'] as $msg) {
-                    $this->createActivity($msg['id'], $message, $header, $jobID, $userID);
                     $id = $msg['id'];
+                    $this->createActivity($id, $message, $header, $jobID, $userID);
                 }
 
                 return $id;
@@ -82,7 +80,7 @@ class io_seven_sms extends CRM_SMS_Provider {
     private function post(array $data): array {
         $data['from'] = $this->_providerInfo['api_params']['from'];
         $data['json'] = 1;
-        $ch = curl_init('https://gateway.seven.io/api/sms');
+        $ch = curl_init($this->_apiURL . '/sms');
         $verifySSL = Civi::settings()->get('verifySSL');
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $verifySSL ? 2 : 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);
@@ -99,13 +97,15 @@ class io_seven_sms extends CRM_SMS_Provider {
     }
 
     /**
-     * @param string $from
-     * @param string $body
-     * @param int|null $trackID
      * @return CRM_SMS_Provider|object|null
      * @throws CRM_Core_Exception
      */
     function inbound(string $from, string $body, ?int $trackID = null) {
-        return $this->processInbound($from, $body, null, $trackID ?? date('YmdHis'));
+        $to = null;
+        if ($trackID === null) $trackID = date('YmdHis');
+/*        $fromPhone = $this->retrieve('From', 'String');
+        $body = $this->retrieve('Body', 'String');
+        $trackID = $this->retrieve('SmsSid', 'String');*/
+        return $this->processInbound($from, $body, $to, $trackID);
     }
 }

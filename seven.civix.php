@@ -163,7 +163,6 @@ function _seven_civix_civicrm_caseTypes(&$caseTypes) {
         if ($name != CRM_Case_XMLProcessor::mungeCaseType($name)) {
             $errorMessage = sprintf("Case-type file name is malformed (%s vs %s)", $name, CRM_Case_XMLProcessor::mungeCaseType($name));
             CRM_Core_Error::fatal($errorMessage);
-            // throw new CRM_Core_Exception($errorMessage);
         }
         $caseTypes[$name] = [
             'file' => $file,

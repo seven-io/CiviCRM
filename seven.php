@@ -53,8 +53,8 @@ function seven_civicrm_uninstall() {
     $optionID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionValue', 'seven', 'id', 'name');
     if ($optionID) CRM_Core_BAO_OptionValue::del($optionID);
 
-    $Providers = CRM_SMS_BAO_Provider::getProviders(false, ['name' => 'io.seven.sms'], false);
-    if ($Providers) foreach ($Providers as $v) CRM_SMS_BAO_Provider::del($v['id']);
+    $Providers = seven_get_providers();
+    foreach ($Providers as $v) CRM_SMS_BAO_Provider::del($v['id']);
 
     _seven_civix_civicrm_uninstall();
 }
@@ -67,8 +67,7 @@ function seven_civicrm_enable() {
     $optionID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionValue', 'seven', 'id', 'name');
     if ($optionID) CRM_Core_BAO_OptionValue::setIsActive($optionID, true);
 
-    $Providers = CRM_SMS_BAO_Provider::getProviders(false, ['name' => 'io.seven.sms'], false);
-    foreach ($Providers ?? [] as $v) CRM_SMS_BAO_Provider::setIsActive($v['id'], true);
+    seven_set_active_provider(true);
 
     _seven_civix_civicrm_enable();
 }
@@ -82,10 +81,19 @@ function seven_civicrm_disable() {
     if ($optionID)
         CRM_Core_BAO_OptionValue::setIsActive($optionID, false);
 
-    $Providers = CRM_SMS_BAO_Provider::getProviders(false, ['name' => 'io.seven.sms'], false);
-    foreach ($Providers ?? [] as $v) CRM_SMS_BAO_Provider::setIsActive($v['id'], false);
+    seven_set_active_provider(false);
 
     _seven_civix_civicrm_disable();
+}
+
+function seven_set_active_provider(bool $active): void {
+    $Providers = seven_get_providers();
+    foreach ($Providers as $v) CRM_SMS_BAO_Provider::setIsActive($v['id'], $active);
+}
+
+function seven_get_providers(): array {
+    $providers = CRM_SMS_BAO_Provider::getProviders(false, ['name' => 'io.seven.sms'], false);
+    return $providers ?? [];
 }
 
 /**

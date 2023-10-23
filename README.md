@@ -1,3 +1,5 @@
+![](https://www.seven.io/wp-content/uploads/Logo.svg "seven Logo")
+
 # io.seven.sms
 
 This CiviCRM extension provides a [seven](https://www.seven.io) SMS provider for

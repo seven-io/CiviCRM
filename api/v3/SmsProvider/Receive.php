@@ -28,18 +28,20 @@ function _civicrm_api3_sms_provider_Receive_spec(&$spec) {
  * @see civicrm_api3_create_success
  */
 function civicrm_api3_sms_provider_Receive($params) {
-    require_once './../../../io_seven_sms.php';
+    require_once __DIR__ . '/../../../io_seven_sms.php';
 
-    if (!isset($params['id'])) $params['id'] = null;
+    $from = $params['from_number'];
+    $body = $params['content'];
+    $trackID = $params['id'] ?? null;
 
-    $res = io_seven_sms::singleton()
-        ->inbound($params['from_number'], $params['content'], $params['id']);
+    $provider = io_seven_sms::singleton();
+    $res = $provider->inbound($from, $body, $trackID);
 
     if ($res && $res->id) {
         $params['id'] = $res->id;
         return civicrm_api3_create_success(
-            [civicrm_api3('Activity', 'getsingle', $params)], $params, 'SmsProvider',
-            'Receive');
+            [civicrm_api3('Activity', 'getsingle', $params)], $params, 'SmsProvider', 'Receive'
+        );
     }
 
     return civicrm_api3_create_error('Inbound SMS processing failed');
