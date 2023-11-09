@@ -100,9 +100,23 @@ class io_seven_sms extends CRM_SMS_Provider {
      * @return CRM_SMS_Provider|object|null
      * @throws CRM_Core_Exception
      */
-    function inbound(string $from, string $body, ?int $trackID = null) {
-        $to = null;
-        if ($trackID === null) $trackID = date('YmdHis');
-        return $this->processInbound($from, $body, $to, $trackID);
+    function inbound() {
+      $data = file_get_contents('php://input');
+
+      if (mb_strlen($data)) {
+        $obj = json_decode($data);
+        $from = $obj->data->sender;
+        $body = $obj->data->text;
+        $trackID = $obj->data->id;
+      }
+      else {
+        $from = $this->retrieve('sender', 'String');
+        $body = $this->retrieve('text', 'String');
+        $trackID = $this->retrieve('id', 'String');
+      }
+
+        if (!$trackID) $trackID = date('YmdHis');
+
+        return $this->processInbound($from, $body, null, $trackID);
     }
 }
