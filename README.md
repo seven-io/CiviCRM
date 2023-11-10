@@ -35,6 +35,8 @@ To send an SMS use the built-in CiviCRM functions (e.g. Contact->Outbound SMS ac
 
 Sent SMS messages will be added to the activity log.
 
+**Important:** Make sure to use event *SMS_MO* when creating a seven webhook.
+
 ### Support
 
 Need help? Feel free to [contact us](https://www.seven.io/en/company/contact/).

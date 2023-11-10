@@ -108,12 +108,16 @@ class io_seven_sms extends CRM_SMS_Provider {
         $from = $obj->data->sender;
         $body = $obj->data->text;
         $trackID = $obj->data->id;
+        $event = $obj->data->webhook_event;
       }
       else {
         $from = $this->retrieve('sender', 'String');
         $body = $this->retrieve('text', 'String');
         $trackID = $this->retrieve('id', 'String');
+        $event = $this->retrieve('webhook_event', 'String');
       }
+
+      if ($event !== 'sms_mo') return null;
 
         if (!$trackID) $trackID = date('YmdHis');
 
