@@ -88,7 +88,7 @@ class io_seven_sms extends CRM_SMS_Provider {
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-type: application/json',
             'SentWith: CiviCRM',
-            'X-Api-Key: ' . $this->_providerInfo['username'],
+            'X-Api-Key: ' . $this->_providerInfo['password'],
         ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);

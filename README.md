@@ -18,8 +18,8 @@ sending/receiving SMS.
 - Click the button `Add SMS Provider`
 - `Name`: Choose `seven` and wait for the default values to load
 - `Title`: Use whatever label makes sense to you
-- `Username`: Use one of your seven API keys
-- `Password`: Use the corresponding API secret for the API key
+- `Username`: Insert anything, the field is not used, but required
+- `Password`: Use one of your seven API keys
 - `API Type`: Set this to `http`
 - `API Url`: Make sure it's set to `https://gateway.seven.io`
 - `API Parameters`: Set a custom sender ID like `from=CiviCRM` or omit the value
