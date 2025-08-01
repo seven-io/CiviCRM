@@ -11,14 +11,6 @@ function seven_civicrm_config(&$config) {
 }
 
 /**
- * Implements hook_civicrm_xmlMenu().
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
- */
-function seven_civicrm_xmlMenu(&$files) {
-    _seven_civix_civicrm_xmlMenu($files);
-}
-
-/**
  * Implements hook_civicrm_install().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
@@ -38,14 +30,6 @@ function seven_civicrm_install() {
 }
 
 /**
- * Implements hook_civicrm_postInstall().
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
- */
-function seven_civicrm_postInstall() {
-    _seven_civix_civicrm_postInstall();
-}
-
-/**
  * Implements hook_civicrm_uninstall().
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
@@ -56,7 +40,6 @@ function seven_civicrm_uninstall() {
     $Providers = seven_get_providers();
     foreach ($Providers as $v) CRM_SMS_BAO_Provider::del($v['id']);
 
-    _seven_civix_civicrm_uninstall();
 }
 
 /**
@@ -83,7 +66,6 @@ function seven_civicrm_disable() {
 
     seven_set_active_provider(false);
 
-    _seven_civix_civicrm_disable();
 }
 
 function seven_set_active_provider(bool $active): void {
@@ -94,51 +76,4 @@ function seven_set_active_provider(bool $active): void {
 function seven_get_providers(): array {
     $providers = CRM_SMS_BAO_Provider::getProviders(false, ['name' => 'io.seven.sms'], false);
     return $providers ?? [];
-}
-
-/**
- * Implements hook_civicrm_upgrade().
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
- */
-function seven_civicrm_upgrade($op, CRM_Queue_Queue $queue = null) {
-    return _seven_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
- * Implements hook_civicrm_managed().
- * Generate a list of entities to create/deactivate/delete when this module
- * is installed, disabled, uninstalled.
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
- */
-function seven_civicrm_managed(&$entities) {
-    _seven_civix_civicrm_managed($entities);
-}
-
-/**
- * Implements hook_civicrm_caseTypes().
- * Generate a list of case-types.
- * Note: This hook only runs in CiviCRM 4.4+.
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
- */
-function seven_civicrm_caseTypes(&$caseTypes) {
-    _seven_civix_civicrm_caseTypes($caseTypes);
-}
-
-/**
- * Implements hook_civicrm_angularModules().
- * Generate a list of Angular modules.
- * Note: This hook only runs in CiviCRM 4.5+. It may
- * use features only available in v4.6+.
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
- */
-function seven_civicrm_angularModules(&$angularModules) {
-    _seven_civix_civicrm_angularModules($angularModules);
-}
-
-/**
- * Implements hook_civicrm_alterSettingsFolders().
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
- */
-function seven_civicrm_alterSettingsFolders(&$metaDataFolders = null) {
-    _seven_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
